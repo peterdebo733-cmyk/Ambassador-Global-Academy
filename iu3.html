@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ambassador Global Academy</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: #161418;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+    /* Navigation Bar */
+    nav {
+      background-color: #1f1f1f;
+      padding: 15px;
+      border-bottom: 2px solid #00c853;
+    }
+    nav a {
+      color: #ffffff;
+      text-decoration: none;
+      margin: 0 20px;
+      font-weight: bold;
+    }
+    nav a:hover {
+      color: #00c853;
+    }
+    /* Main Container */
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+    img {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #00c853;
+    }
+    /* Skills Badges */
+    .skills {
+      list-style: none;
+      padding: 0;
+      margin: 25px 0;
+    }
+    .skills li {
+      display: inline-block;
+      background-color: #262626;
+      border: 1px solid #00c853;
+      padding: 8px 16px;
+      margin: 5px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+    /* Side-by-Side Course Cards */
+    .courses-grid {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+    .card {
+      background-color: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      flex: 1;
+      min-width: 220px;
+      text-align: left;
+      border-top: 3px solid #00c853;
+    }
+    /* Contact Form Styling */
+    .contact-box {
+      background-color: #1e1e1e;
+      padding: 30px;
+      border-radius: 10px;
+      margin-top: 40px;
+      text-align: left;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0 20px 0;
+      background-color: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: white;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #00c853;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background-color: #009624;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#about">About</a>
+    <a href="#courses">Courses</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="container" id="about">
+    <img src="https://unsplash.com" alt="Laptop with code">
+
+    <h1>AMBASSADOR GLOBAL ACADEMY</h1>
+    <p>Empowering self-taught developers to build modern websites from scratch.</p>
+
+    <ul class="skills">
+      <li>HTML5</li>
+      <li>CSS3</li>
+      <li>JavaScript</li>
+      <li>Linux Terminal</li>
+    </ul>
+
+    <!-- 3 Side-by-Side Course Cards -->
+    <h2 id="courses" style="margin-top: 40px;">Our Free Tracks</h2>
+    <div class="courses-grid">
+      <div class="card">
+        <h3>1. Web Foundations</h3>
+        <p>Learn HTML structure and page layouts from the ground up.</p>
+      </div>
+      <div class="card">
+        <h3>2. Modern Styling</h3>
+        <p>Master CSS colors, Flexbox grids, and mobile-friendly design.</p>
+      </div>
+      <div class="card">
+        <h3>3. Interactive Logic</h3>
+        <p>Use JavaScript to handle clicks, forms, and live updates.</p>
+      </div>
+    </div>
+
+    <!-- Real Email-Sending Contact Form (Stays on Your Page) -->
+    <div class="contact-box" id="contact">
+      <h2>Send Us a Message</h2>
+      <form id="academyForm" action="https://formspree.io" method="POST">
+        <label>Your Name</label>
+        <input type="text" name="name" placeholder="Enter your full name" required>
+
+        <label>Your Email</label>
+        <input type="email" name="email" placeholder="Enter your email address" required>
+
+        <label>Your Message</label>
+        <textarea name="message" rows="4" placeholder="What do you want to learn?" required></textarea>
+
+        <button type="submit" id="submitBtn">Send Message</button>
+      </form>
+      <p id="formStatus" style="color: #00c853; font-weight: bold; margin-top: 15px;"></p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById("academyForm");
+    const status = document.getElementById("formStatus");
+    const btn = document.getElementById("submitBtn");
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+      
+      btn.disabled = true;
+      btn.style.opacity = "0.7";
+      btn.innerText = "Sending message, please wait...";
+      status.innerText = "";
+
+      try {
+        const response = await fetch(form.action, {
+          method: form.method,
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (response.ok) {
+          status.style.color = "#00c853";
+          status.innerText = "Message sent! Ambassador Global Academy will reply soon.";
+          form.reset();
+        } else {
+          status.style.color = "#ff5252";
+          status.innerText = "Could not send message. Please check your network and try again.";
+        }
+      } catch (error) {
+        status.style.color = "#ff5252";
+        status.innerText = "Network error. Please check your internet connection.";
+      }
+
+      btn.disabled = false;
+      btn.style.opacity = "1";
+      btn.innerText = "Send Message";
+    });
+  </script>
+
+</body>
+</html>
